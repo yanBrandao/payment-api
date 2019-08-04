@@ -1,2 +1,2 @@
 # Payment API 
-https://travis-ci.org/yanBrandao/payment-api.svg?branch=dev
+![img](https://travis-ci.org/yanBrandao/payment-api.svg?branch=dev)
