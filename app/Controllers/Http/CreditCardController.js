@@ -12,14 +12,42 @@ const CreditCard = use('App/Models/CreditCard');
 class CreditCardController {
 
   /**
-   * Show a list of all creditcards.
-   * GET creditcards
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
+  * @swagger
+  * /api/hello:
+  *   get:
+  *     tags:
+  *       - Test
+  *     summary: Sample API
+  *     parameters:
+  *       - name: name
+  *         description: Name of the user
+  *         in: query
+  *         required: false
+  *         type: string
+  *     responses:
+  *       200:
+  *         description: Send hello message
+  *         example:
+  *           message: Hello Guess
+  */
+ async hello({ request, response }) {
+  const name = request.input('name', 'Guess')
+  response.send({ message: 'Hello ' + name })
+}
+
+  /**
+  * @swagger
+  * /api/credit_cards:
+  *   get:
+  *     tags:
+  *       - CreditCard
+  *     summary: Credit Card endpoints
+  *     responses:
+  *       200:
+  *         description: List all credit cards
+  *         example:
+  *           message: []
+  */
   async index ({ request, response, view }) {
     let cards = await CreditCard.query().fetch()
     return response.json(cards)
@@ -38,13 +66,39 @@ class CreditCardController {
   }
 
   /**
-   * Create/save a new creditcard.
-   * POST creditcards
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
+  * @swagger
+  * /api/credit_cards:
+  *   post:
+  *     tags:
+  *       - CreditCard
+  *     summary: List all credit cards
+  *     parameters:
+  *       - name: name
+  *         description: Name of credit card user
+  *         in: query
+  *         required: true
+  *         type: string
+  *       - name: number
+  *         description: Credit card number
+  *         in: query
+  *         required: true
+  *         type: string
+  *       - name: date_validation
+  *         description: Validation date
+  *         in: query
+  *         required: true
+  *         type: date
+  *       - name: cvv
+  *         description: Autentication code
+  *         in: query
+  *         required: true
+  *         type: string
+  *     responses:
+  *       200:
+  *         description: OK
+  *         example:
+  *           message: []
+  */
   async store ({ request, response }) {
 
     const name = request.input('name')
@@ -72,6 +126,8 @@ class CreditCardController {
    * @param {View} ctx.view
    */
   async show ({ params, request, response, view }) {
+    let cards = await CreditCard.query().fetch()
+    return response.json(cards)
   }
 
   /**
