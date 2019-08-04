@@ -21,4 +21,11 @@ Route.put('/api/credit_cards/:id', 'CreditCardController.update')
 Route.delete('/api/credit_cards/id', 'CreditCardController.destroy')
 Route.post('/api/credit_cards', 'CreditCardController.store')
 Route.get('/api/credit_cards', 'CreditCardController.index')
-Route.get('/api/hello', 'CreditCardController.hello')
+Route.get('/api/clients/payables', 'ClientController.payables')
+Route.get('/api/clients', 'ClientController.index')
+Route.post('/api/clients', 'ClientController.store')
+Route.post('/api/transactions', 'TransactionController.store')
+
+
+
+

@@ -4,6 +4,11 @@
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 /** @typedef {import('@adonisjs/framework/src/View')} View */
 
+
+const Transaction = use('App/Models/Transaction');
+const Client = use('App/Models/Client');
+const CreditCard = use('App/Models/CreditCard');
+
 /**
  * Resourceful controller for interacting with transactions
  */
@@ -32,16 +37,65 @@ class TransactionController {
   async create ({ request, response, view }) {
   }
 
-  /**
-   * Create/save a new transaction.
-   * POST transactions
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
-  async store ({ request, response }) {
+ /**
+  * @swagger
+  * /api/transactions/:
+  *   post:
+  *     tags:
+  *       - Transaction
+  *     summary: Create a new transaction
+  *     parameters:
+  *       - name: transaction
+  *         in: body
+  *         description: Transaction object
+  *         required: true
+  *         schema:
+  *           $ref: '#definitions/Transaction'
+  *     responses:
+  *       200:
+  *         description: Create sucessfull
+  *         example:
+  *           $ref: '#definitions/Transaction'
+  */
+ async store ({ request, response }) {
+
+  const card = new CreditCard()
+  const client = new Client()
+  if(!this.existCard(request.input('number'))){
+    card.name = request.input('name')
+    card.number = request.input('number')
+    card.date_validation = request.input('date_validation')
+    card.cvv = request.input('cvv')
+    await card.save()
   }
+
+  if(!this.existClient(request.input('cnpj'))){
+    client.name = request.input('name')
+    client.cnpj = request.cnpj('cnpj')
+    await client.save()
+  }
+
+  console.log(card)
+  console.log(client)
+
+  const transaction = new Transaction()
+  transaction.value = request.input('value')
+  transaction.description = request.input('description')
+  transaction.payment_method = request.input('payment_method')
+  transaction.credit_card_id = card.id;
+  transaction.client_id = client.id;
+
+  await transaction.save()
+  return response.json(transaction)
+}
+
+existCard(card_number){
+  return CreditCard.find('number', card_number)
+}
+
+existClient(client_cnpj){
+  return Client.find('cnpj', client_cnpj)
+}
 
   /**
    * Display a single transaction.

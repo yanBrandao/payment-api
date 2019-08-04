@@ -14,7 +14,8 @@ const Model = use('Model')
 *        number:
 *          type: string
 *        date_validation:
-*          type: date
+*          type: string
+*          format: date
 *        cvv:
 *          type: string
 */

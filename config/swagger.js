@@ -15,10 +15,10 @@ module.exports = {
   options: {
     swaggerDefinition: {
       info: {
-        title: 'Adonis 💘 Swagger',
-        version: '1.0.0',
+        title: 'Payment API 💸',
+        version: '0.0.1',
       },
-  
+
       basePath: '/',
 
       // Example security definitions.

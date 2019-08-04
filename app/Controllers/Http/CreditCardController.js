@@ -13,35 +13,11 @@ class CreditCardController {
 
   /**
   * @swagger
-  * /api/hello:
-  *   get:
-  *     tags:
-  *       - Test
-  *     summary: Sample API
-  *     parameters:
-  *       - name: name
-  *         description: Name of the user
-  *         in: query
-  *         required: false
-  *         type: string
-  *     responses:
-  *       200:
-  *         description: Send hello message
-  *         example:
-  *           message: Hello Guess
-  */
- async hello({ request, response }) {
-  const name = request.input('name', 'Guess')
-  response.send({ message: 'Hello ' + name })
-}
-
-  /**
-  * @swagger
   * /api/credit_cards:
   *   get:
   *     tags:
   *       - CreditCard
-  *     summary: Credit Card endpoints
+  *     summary: List all credit cards
   *     responses:
   *       200:
   *         description: List all credit cards
@@ -67,37 +43,23 @@ class CreditCardController {
 
   /**
   * @swagger
-  * /api/credit_cards:
+  * /api/credit_cards/:
   *   post:
   *     tags:
   *       - CreditCard
-  *     summary: List all credit cards
+  *     summary: Create a credit card
   *     parameters:
-  *       - name: name
-  *         description: Name of credit card user
-  *         in: query
+  *       - name: creditcard
+  *         in: body
+  *         description: Credit Card object
   *         required: true
-  *         type: string
-  *       - name: number
-  *         description: Credit card number
-  *         in: query
-  *         required: true
-  *         type: string
-  *       - name: date_validation
-  *         description: Validation date
-  *         in: query
-  *         required: true
-  *         type: date
-  *       - name: cvv
-  *         description: Autentication code
-  *         in: query
-  *         required: true
-  *         type: string
+  *         schema:
+  *           $ref: '#definitions/CreditCard'
   *     responses:
   *       200:
-  *         description: OK
+  *         description: Create sucessfull
   *         example:
-  *           message: []
+  *           $ref: '#definitions/CreditCard'
   */
   async store ({ request, response }) {
 
